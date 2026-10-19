@@ -1,0 +1,13 @@
+# Copies of the manifests used for manual loading (see README).
+manifest.json
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.log
+
+# Packaged builds (not committed)
+*.zip
+*.crx
+*.xpi
+web-ext-artifacts/
