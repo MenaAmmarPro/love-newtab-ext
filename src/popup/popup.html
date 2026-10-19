@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090b20">
+  <title>Love New Tab — settings</title>
+  <link rel="icon" href="../../icons/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../common/theme.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body class="pp-body">
+  <main class="pp">
+    <header class="pp-head">
+      <h1 class="pp-title">Our <span>New Tab</span> ♥</h1>
+      <p class="pp-sub">Everything here stays on this device.</p>
+    </header>
+
+    <form class="pp-form" id="pp-form" novalidate>
+      <fieldset class="pp-fieldset">
+        <legend>Names</legend>
+        <div class="pp-grid2">
+          <label class="pp-label" for="pp-you">Her name
+            <input id="pp-you" type="text" maxlength="24" autocomplete="off">
+          </label>
+          <label class="pp-label" for="pp-me">Your name
+            <input id="pp-me" type="text" maxlength="24" autocomplete="off">
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset class="pp-fieldset">
+        <legend>Countdown</legend>
+        <label class="pp-label" for="pp-date">Next time we meet
+          <input id="pp-date" type="date">
+        </label>
+        <label class="pp-label" for="pp-label">Words under the number
+          <input id="pp-label" type="text" maxlength="60" autocomplete="off">
+        </label>
+      </fieldset>
+
+      <fieldset class="pp-fieldset">
+        <legend>Quick links</legend>
+        <div class="pp-links" id="pp-links"></div>
+        <button class="pp-mini" id="pp-add" type="button">+ Add a link</button>
+        <p class="pp-hint">Up to 12 tiles. Leave the address empty to drop a tile.</p>
+      </fieldset>
+
+      <fieldset class="pp-fieldset">
+        <legend>Show on the New Tab</legend>
+        <label class="pp-check"><input id="pp-reason" type="checkbox"> A reason for today</label>
+        <label class="pp-check"><input id="pp-quote" type="checkbox"> A little quote</label>
+        <label class="pp-check"><input id="pp-starfield" type="checkbox"> Starfield background</label>
+        <label class="pp-check"><input id="pp-24" type="checkbox"> 24-hour clock</label>
+      </fieldset>
+
+      <div class="pp-actions">
+        <button class="pp-btn pp-btn-primary" id="pp-save" type="submit">Save</button>
+        <button class="pp-btn" id="pp-open" type="button">Open New Tab</button>
+        <button class="pp-btn" id="pp-reset" type="button">Reset</button>
+      </div>
+
+      <p class="pp-status" id="pp-status" role="status" aria-live="polite"></p>
+    </form>
+
+    <footer class="pp-foot">Made with love, just for you ♥</footer>
+  </main>
+
+  <script src="../common/api.js"></script>
+  <script src="../common/data.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
