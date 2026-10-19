@@ -71,16 +71,28 @@ function makeApiMock(store) {
     storage: {
       local: {
         get(key, cb) {
-          if (typeof key === "function") return key({});
-          if (typeof cb === "function") cb({ [key]: store[key] });
+          const result = typeof key === "string" ? { [key]: store[key] } : Object.assign({}, store);
+          if (typeof cb === "function") {
+            cb(result);
+            return undefined;
+          }
+          return Promise.resolve(result);
         },
         set(obj, cb) {
           Object.assign(store, obj);
-          if (typeof cb === "function") cb();
+          if (typeof cb === "function") {
+            cb();
+            return undefined;
+          }
+          return Promise.resolve();
         },
         remove(key, cb) {
-          delete store[key];
-          if (typeof cb === "function") cb();
+          if (typeof key === "string") delete store[key];
+          if (typeof cb === "function") {
+            cb();
+            return undefined;
+          }
+          return Promise.resolve();
         }
       },
       onChanged: { addListener() {} }
@@ -306,18 +318,29 @@ eq(NT.countdownText({ done: false, days: 0, hours: 0, minutes: 9, seconds: 4 }, 
 
 /* ---------------- background script (own context) ---------------- */
 
-const bgStore = {};
-const bgsb = makeSandbox(makeApiMock(bgStore), bgStore);
-load(bgsb, "src/background.js");
-const BG = bgsb.MenaNewTabBackground;
-assert(!!BG, "background exposes MenaNewTabBackground");
-eq(BG.VERSION, "1.0.0", "background version");
-eq(BG.META_KEY, "mena-newtab-meta", "background meta key");
-BG.seedMeta();
-assert(!!bgStore["mena-newtab-meta"] && !!bgStore["mena-newtab-meta"].version, "seedMeta writes a version marker");
-const firstInstall = bgStore["mena-newtab-meta"].installedAt;
-BG.seedMeta();
-eq(bgStore["mena-newtab-meta"].installedAt, firstInstall, "seedMeta does not overwrite an existing marker");
+async function runBackgroundChecks() {
+  const bgStore = {};
+  const bgsb = makeSandbox(makeApiMock(bgStore), bgStore);
+  load(bgsb, "src/background.js");
+  const BG = bgsb.MenaNewTabBackground;
+  assert(!!BG, "background exposes MenaNewTabBackground");
+  eq(BG.VERSION, "1.0.0", "background version");
+  eq(BG.META_KEY, "mena-newtab-meta", "background meta key");
+  await BG.seedMeta();
+  assert(
+    !!bgStore["mena-newtab-meta"] && !!bgStore["mena-newtab-meta"].version,
+    "seedMeta writes a version marker"
+  );
+  const firstInstall = bgStore["mena-newtab-meta"].installedAt;
+  await BG.seedMeta();
+  eq(
+    bgStore["mena-newtab-meta"].installedAt,
+    firstInstall,
+    "seedMeta does not overwrite an existing marker"
+  );
+}
+
+const backgroundChecks = runBackgroundChecks();
 
 /* ---------------- manifests ---------------- */
 
@@ -372,8 +395,10 @@ referenced.forEach((rel) => {
 
 /* ---------------- result ---------------- */
 
-if (failures) {
-  console.error("\n" + failures + " of " + checks + " check(s) failed.");
-  process.exit(1);
-}
-console.log("\nAll " + checks + " love-newtab-ext checks passed ♥");
+backgroundChecks.then(function report() {
+  if (failures) {
+    console.error("\n" + failures + " of " + checks + " check(s) failed.");
+    process.exit(1);
+  }
+  console.log("\nAll " + checks + " love-newtab-ext checks passed ♥");
+});
