@@ -14,14 +14,18 @@ const META_KEY = "mena-newtab-meta";
 const VERSION = "1.0.0";
 
 function seedMeta() {
-  if (!api || !api.storage || !api.storage.local) return;
-  api.storage.local.get(META_KEY, (data) => {
-    const existing = (data && data[META_KEY]) || null;
-    if (existing && existing.version) return;
-    api.storage.local.set({
-      [META_KEY]: { version: VERSION, installedAt: Date.now() }
+  if (!api || !api.storage || !api.storage.local) return Promise.resolve();
+  return Promise.resolve(api.storage.local.get(META_KEY))
+    .then((data) => {
+      const existing = (data && data[META_KEY]) || null;
+      if (existing && existing.version) return undefined;
+      return api.storage.local.set({
+        [META_KEY]: { version: VERSION, installedAt: Date.now() }
+      });
+    })
+    .catch(() => {
+      // Storage is unavailable; the New Tab page seeds its own defaults.
     });
-  });
 }
 
 if (api && api.runtime && api.runtime.onInstalled) {
