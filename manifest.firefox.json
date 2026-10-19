@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "Love New Tab — for Mena",
+  "version": "1.0.0",
+  "description": "A romantic New Tab: a big clock, our reunion countdown, a reason for today, a quote and editable quick links.",
+  "author": "Ammar (MenaAmmarPro)",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "chrome_url_overrides": {
+    "newtab": "src/newtab/newtab.html"
+  },
+  "background": {
+    "scripts": ["src/background.js"]
+  },
+  "action": {
+    "default_title": "Love New Tab settings",
+    "default_popup": "src/popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png"
+    }
+  },
+  "options_ui": {
+    "page": "src/popup/popup.html",
+    "open_in_tab": true
+  },
+  "permissions": ["storage"],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "love-newtab@menaammarpro.github.io",
+      "strict_min_version": "109.0"
+    }
+  }
+}
