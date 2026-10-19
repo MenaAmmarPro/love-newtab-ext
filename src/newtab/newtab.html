@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090b20">
+  <title>New Tab — for Mena ♥</title>
+  <link rel="icon" href="../../icons/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../common/theme.css">
+  <link rel="stylesheet" href="newtab.css">
+</head>
+<body class="nt-body">
+  <canvas id="starfield" aria-hidden="true"></canvas>
+
+  <main class="nt">
+    <section class="nt-clock" aria-label="Clock">
+      <p class="nt-greeting" id="nt-greeting">Good morning ♥</p>
+      <p class="nt-time">
+        <span id="nt-time">00:00:00</span>
+        <span class="nt-ampm" id="nt-ampm"></span>
+      </p>
+      <p class="nt-date" id="nt-date">—</p>
+    </section>
+
+    <section class="nt-countdown" aria-label="Countdown">
+      <p class="nt-countdown-label" id="nt-countdown-label">until we're together again</p>
+      <p class="nt-countdown-days">
+        <span class="nt-days" id="nt-days">0</span>
+        <span class="nt-days-unit" id="nt-days-unit">days to go</span>
+      </p>
+      <p class="nt-countdown-sub" id="nt-countdown-sub"></p>
+    </section>
+
+    <section class="nt-links-section" aria-label="Quick links">
+      <div class="nt-links" id="nt-links"></div>
+    </section>
+
+    <section class="nt-words">
+      <div class="nt-word-card" id="nt-reason-wrap">
+        <p class="nt-word-label">A reason, just for today</p>
+        <p class="nt-reason" id="nt-reason"></p>
+      </div>
+      <div class="nt-word-card" id="nt-quote-wrap">
+        <p class="nt-word-label">A little quote</p>
+        <p class="nt-quote" id="nt-quote"></p>
+        <button class="nt-shuffle" id="nt-shuffle" type="button">Another one</button>
+      </div>
+    </section>
+
+    <footer class="nt-foot">
+      <span class="nt-foot-love">Made with love, just for you ♥</span>
+      <button class="nt-linkish" id="nt-settings" type="button">Settings</button>
+    </footer>
+  </main>
+
+  <script src="../common/api.js"></script>
+  <script src="../common/data.js"></script>
+  <script src="newtab.js"></script>
+</body>
+</html>
