@@ -443,13 +443,22 @@
     renderStarfield();
   }
 
-  function save(cb) {
-    if (!api || !api.storage || !api.storage.local) return;
+  function readStored() {
+    if (!api || !api.storage || !api.storage.local) return Promise.resolve(null);
+    return Promise.resolve(api.storage.local.get(STORE))
+      .then(function (data) {
+        return data ? data[STORE] : null;
+      })
+      .catch(function () {
+        return null;
+      });
+  }
+
+  function save() {
+    if (!api || !api.storage || !api.storage.local) return Promise.resolve();
     var payload = {};
     payload[STORE] = settings;
-    api.storage.local.set(payload, function () {
-      if (typeof cb === "function") cb();
-    });
+    return Promise.resolve(api.storage.local.set(payload)).catch(function () {});
   }
 
   function withSettings(next) {
@@ -492,8 +501,7 @@
     startStarfield();
 
     if (api && api.storage && api.storage.local) {
-      api.storage.local.get(STORE, function (data) {
-        var stored = data && data[STORE];
+      readStored().then(function (stored) {
         settings = loadSettings(stored);
         if (!stored) save();
         renderAll();
