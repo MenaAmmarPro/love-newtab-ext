@@ -1,0 +1,210 @@
+/* love-newtab-ext — popup / options page styles (built on ../common/theme.css) */
+
+.pp-body {
+  margin: 0;
+  padding: 1rem;
+  background: var(--bg);
+}
+
+.pp {
+  width: min(420px, 100%);
+  margin: 0 auto;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.pp-head {
+  text-align: center;
+}
+
+.pp-title {
+  margin: 0;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+}
+
+.pp-sub {
+  margin: 0.2rem 0 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.pp-form {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.pp-fieldset {
+  margin: 0;
+  padding: 0.75rem 0.9rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--panel);
+}
+
+.pp-fieldset legend {
+  padding: 0 0.4rem;
+  color: var(--pink);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.pp-label {
+  display: grid;
+  gap: 0.3rem;
+  margin-top: 0.3rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.pp-label input {
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg-soft);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.85rem;
+}
+
+.pp-label input:focus-visible {
+  outline: 2px solid var(--pink);
+  outline-offset: 1px;
+}
+
+.pp-grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+.pp-links {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 0.3rem;
+}
+
+.pp-link-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) auto;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.pp-link-row input {
+  min-width: 0;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--bg-soft);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.8rem;
+}
+
+.pp-remove {
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.pp-remove:hover {
+  color: var(--pink);
+  border-color: var(--pink);
+}
+
+.pp-mini {
+  margin-top: 0.5rem;
+  padding: 0.35rem 0.8rem;
+  border: 1px dashed var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--pink);
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.pp-hint {
+  margin: 0.5rem 0 0;
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
+.pp-check {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 0.35rem;
+  color: var(--text);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.pp-check input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--pink);
+  cursor: pointer;
+}
+
+.pp-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.pp-btn {
+  flex: 1 1 auto;
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.pp-btn:hover {
+  transform: translateY(-1px);
+  border-color: var(--pink);
+}
+
+.pp-btn-primary {
+  border-color: transparent;
+  background: linear-gradient(120deg, var(--pink), #e0c1ff);
+  color: #28152b;
+}
+
+.pp-status {
+  min-height: 1.1em;
+  margin: 0;
+  color: var(--pink);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.pp-foot {
+  color: var(--muted);
+  font-size: 0.74rem;
+  text-align: center;
+}
+
+@media (max-width: 360px) {
+  .pp-grid2,
+  .pp-link-row {
+    grid-template-columns: 1fr;
+  }
+}
