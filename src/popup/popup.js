@@ -129,27 +129,47 @@
     };
   }
 
+  function storageKey() {
+    return NT ? NT.STORE : "mena-newtab";
+  }
+
+  function readStored() {
+    if (!api || !api.storage || !api.storage.local) return Promise.resolve(null);
+    var key = storageKey();
+    return Promise.resolve(api.storage.local.get(key))
+      .then(function (data) {
+        return data ? data[key] : null;
+      })
+      .catch(function () {
+        return null;
+      });
+  }
+
   function saveSettings(settings, message) {
     if (!api || !api.storage || !api.storage.local) {
       status("Storage is unavailable here.");
       return;
     }
     var payload = {};
-    payload[NT ? NT.STORE : "mena-newtab"] = settings;
-    api.storage.local.set(payload, function () {
-      status(message || "Saved ♥");
-      window.setTimeout(function () {
-        if ($("pp-status") && $("pp-status").textContent === (message || "Saved ♥")) status("");
-      }, 1800);
-    });
+    payload[storageKey()] = settings;
+    Promise.resolve(api.storage.local.set(payload))
+      .then(function () {
+        var note = message || "Saved ♥";
+        status(note);
+        window.setTimeout(function () {
+          if ($("pp-status") && $("pp-status").textContent === note) status("");
+        }, 1800);
+      })
+      .catch(function () {
+        status("Couldn't save here.");
+      });
   }
 
   function boot() {
     loadInto(defaults());
 
     if (api && api.storage && api.storage.local) {
-      api.storage.local.get(NT ? NT.STORE : "mena-newtab", function (data) {
-        var stored = data && data[NT ? NT.STORE : "mena-newtab"];
+      readStored().then(function (stored) {
         loadInto(stored ? (NT ? NT.loadSettings(stored) : stored) : defaults());
       });
     }
